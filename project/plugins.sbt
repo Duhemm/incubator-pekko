@@ -34,4 +34,8 @@ addSbtPlugin("io.github.siculo" % "sbt-bom" % "0.3.0")
 
 addSbtPlugin("org.apache.pekko" % "pekko-sbt-paradox" % "1.0.1")
 
-addSbtPlugin("com.gradle" % "sbt-develocity" % "1.0.1")
+resolvers += "Develocity Snapshots" at "https://repo.grdev.net:443/artifactory/enterprise-libs-sbt-snapshots-local/"
+credentials += Credentials("Artifactory Realm", "repo.grdev.net", sys.env("ARTIFACTORY_USERNAME"), sys.env("ARTIFACTORY_PASSWORD"))
+
+
+addSbtPlugin("com.gradle" % "sbt-develocity" % "1.1-branch-main-20240722100433")

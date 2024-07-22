@@ -52,6 +52,8 @@ jobs:
 
       - name: Compile and run tests on Scala 3
         env:
+          ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
           DEVELOCITY_ACCESS_KEY: ${{ secrets.GE_ACCESS_TOKEN }}
         # note that this is not running any multi-jvm tests (yet) because multi-in-test=false
         run: |

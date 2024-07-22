@@ -50,4 +50,6 @@ jobs:
       - name: Compile testClass&docs for all Scala versions
         env:
           DEVELOCITY_ACCESS_KEY: ${{ secrets.GE_ACCESS_TOKEN }}
+          ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
         run: sbt ";+TestJdk9 / compile ; +compile:doc"

@@ -60,6 +60,19 @@ object PekkoDevelocityPlugin extends AutoPlugin {
               .withMaxRetries(1)
               .withFlakyTestPolicy(FlakyTestPolicy.Fail) // preserve the original build outcome in case of flaky tests
           )
+          .withBuildCacheConfiguration(
+            original.buildCacheConfiguration
+              .withRemote(
+                original.buildCacheConfiguration.remote
+                  .withEnabled(true)
+                  .withStoreEnabled(true)
+              )
+              .withLocal(
+                original.buildCacheConfiguration.local
+                  .withEnabled(true)
+                  .withStoreEnabled(true)
+              )
+          )
       } else apacheDevelocityConfiguration
     })
 }

@@ -52,4 +52,4 @@ jobs:
           DEVELOCITY_ACCESS_KEY: ${{ secrets.GE_ACCESS_TOKEN }}
           ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
           ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-        run: sbt ";+TestJdk9 / compile ; +compile:doc"
+        run: sbt ";clean ; +TestJdk9 / compile ; +compile:doc"

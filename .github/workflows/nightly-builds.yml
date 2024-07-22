@@ -182,6 +182,7 @@ jobs:
           # genjavadoc does not support Scala 3.x
           sbt \
             -Dpekko.genjavadoc.enabled=${{ !startsWith(matrix.scalaVersion, '3') }} \
+            clean \
             "++ ${{ matrix.scalaVersion }} doc"
 
       - name: Publish
@@ -191,6 +192,7 @@ jobs:
           sudo apt-get install graphviz
           sbt \
             -Dpekko.build.scalaVersion=${{ matrix.scalaVersion }} \
+            clean \
             "++ ${{ matrix.scalaVersion }} ;publishLocal;publishM2"
 
       - name: Install scala-cli

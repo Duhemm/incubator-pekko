@@ -39,15 +39,15 @@ jobs:
         run: cp .jvmopts-ci .jvmopts
 
       - name: Compile code
-        run: sbt +compile
+        run: sbt clean +compile
 
       - name: Check if the dependency task in the built correctly
-        run: sbt dependWalkerCheck
+        run: sbt clean dependWalkerCheck
 
       - name: Report MiMa Binary Issues
         run: |-
-          sbt +mimaReportBinaryIssues
+          sbt clean +mimaReportBinaryIssues
 
       - name: Check correct MiMa filter directories
         run: |
-          sbt checkMimaFilterDirectories
+          sbt clean checkMimaFilterDirectories

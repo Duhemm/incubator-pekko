@@ -31,4 +31,5 @@ jobs:
           sbt \
           -Dsbt.override.build.repos=false \
           -Dsbt.log.noformat=false \
+          clean \
           +headerCheckAll

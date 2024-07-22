@@ -41,6 +41,7 @@ jobs:
           sbt \
           -Dsbt.override.build.repos=false \
           -Dsbt.log.noformat=false \
+          clean \
           javafmtCheckAll
   pull-request-validation:
     name: Check / Tests
@@ -82,6 +83,7 @@ jobs:
           -Dpekko.test.multi-node=false \
           -Dsbt.log.noformat=false \
           -Dpekko.log.timestamps=true \
+          clean \
           validateCompile
 
       - name: sbt validatePullRequest
@@ -97,4 +99,5 @@ jobs:
           -Dpekko.test.multi-node=false \
           -Dsbt.log.noformat=false \
           -Dpekko.log.timestamps=true \
+          clean \
           validatePullRequest

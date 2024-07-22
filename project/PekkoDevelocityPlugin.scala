@@ -27,7 +27,7 @@ import sbt.Keys.insideCI
 
 object PekkoDevelocityPlugin extends AutoPlugin {
 
-  private val ApacheDevelocityUrl = url("https://ge.apache.org")
+  private val ApacheDevelocityUrl = url("https://ge-helm-unstable.grdev.net")
   private val PekkoProjectId = ProjectId("pekko")
   private val ObfuscatedIPv4Address = "0.0.0.0"
 

@@ -8,6 +8,7 @@ permissions: {}
 
 jobs:
   dependency-graph:
+    if: github.repository == 'apache/pekko'
     name: Update Dependency Graph
     runs-on: ubuntu-latest
     permissions:

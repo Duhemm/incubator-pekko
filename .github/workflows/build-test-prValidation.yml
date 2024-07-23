@@ -12,6 +12,7 @@ concurrency:
 
 jobs:
   check-code-style:
+    if: github.repository == 'apache/pekko'
     name: Check / Code Style
     runs-on: ubuntu-22.04
     env:
@@ -44,6 +45,7 @@ jobs:
           clean \
           javafmtCheckAll
   pull-request-validation:
+    if: github.repository == 'apache/pekko'
     name: Check / Tests
     runs-on: ubuntu-20.04
     env:

@@ -9,6 +9,7 @@ permissions: {}
 
 jobs:
   pekko-cluster-metrics-sigar:
+    if: github.repository == 'apache/pekko'
     name: Pekko Cluster Metrics Test with Sigar
     runs-on: ubuntu-20.04
     steps:
@@ -53,6 +54,7 @@ jobs:
             clean cluster-metrics/test
 
   pekko-classic-remoting-tests:
+    if: github.repository == 'apache/pekko'
     name: Pekko Classic Remoting Tests
     runs-on: ubuntu-20.04
     strategy:
@@ -101,6 +103,7 @@ jobs:
           clean ${{ matrix.command }}
 
   jdk-nightly-build:
+    if: github.repository == 'apache/pekko'
     name: JDK ${{ matrix.javaVersion }} / Scala ${{ matrix.scalaVersion }}
     runs-on: ubuntu-20.04
     strategy:

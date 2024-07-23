@@ -25,6 +25,7 @@ permissions:
 
 jobs:
   generate-doc-check:
+    if: github.repository == 'apache/pekko'
     name: Generate doc check
     runs-on: ubuntu-20.04
     steps:

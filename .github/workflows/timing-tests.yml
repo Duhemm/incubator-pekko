@@ -10,6 +10,7 @@ permissions: {}
 jobs:
 
   pekko-timing-sensitive-tests:
+    if: github.repository == 'apache/pekko'
     name: Pekko Tests taggedAs TimingTest
     runs-on: ubuntu-20.04
     steps:

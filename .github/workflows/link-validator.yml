@@ -10,6 +10,7 @@ on:
 
 jobs:
   validate-links:
+    if: github.repository == 'apache/pekko'
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout

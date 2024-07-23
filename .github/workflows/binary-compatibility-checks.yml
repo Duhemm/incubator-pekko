@@ -11,6 +11,7 @@ permissions: {}
 
 jobs:
   check-binary-compatibility:
+    if: github.repository == 'apache/pekko'
     name: Check / Binary Compatibility
     runs-on: ubuntu-20.04
     strategy:

@@ -8,6 +8,7 @@ on:
 
 jobs:
   build:
+    if: github.repository == 'apache/pekko'
     name: Code is formatted
     runs-on: ubuntu-latest
     steps:

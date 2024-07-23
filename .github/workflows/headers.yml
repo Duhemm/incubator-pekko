@@ -7,7 +7,6 @@ permissions: {}
 
 jobs:
   check-headers:
-    if: github.repository == 'apache/pekko'
     name: Check headers
     runs-on: ubuntu-20.04
     steps:

@@ -10,7 +10,6 @@ permissions: {}
 jobs:
 
   pekko-artery-aeron-tests:
-    if: github.repository == 'apache/pekko'
     name: Pekko Artery Aeron Tests
     runs-on: ubuntu-20.04
     strategy:

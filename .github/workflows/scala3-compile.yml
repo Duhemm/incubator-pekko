@@ -58,4 +58,5 @@ jobs:
           -Ddevelocity.internal.cache.verbose=true \
           -Ddevelocity.internal.cache.defaultLogLevel=info \
           clean \
+          debug \
           "++ 3.x ${{ matrix.command }}"

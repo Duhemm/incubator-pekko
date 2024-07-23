@@ -18,6 +18,8 @@ jobs:
       - name: Launch Scala Steward
         uses: scala-steward-org/scala-steward-action@v2
         env:
+          ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
           JAVA_OPTS: "-XX:+UseG1GC -Xms4G -Xmx4G -Xss2M -XX:+AlwaysActAsServerClassMachine -XX:ReservedCodeCacheSize=256m -XX:MaxGCPauseMillis=750 -XX:+UseCompressedOops -XX:MetaspaceSize=512M"
         with:
           github-app-id: ${{ secrets.SCALA_STEWARD_APP_ID }}

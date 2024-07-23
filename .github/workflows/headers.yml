@@ -25,8 +25,14 @@ jobs:
       - name: Check headers
         env:
           DEVELOCITY_ACCESS_KEY: ${{ secrets.GE_ACCESS_TOKEN }}
+          ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
         run: |-
           sbt \
           -Dsbt.override.build.repos=false \
           -Dsbt.log.noformat=false \
+          -Ddevelocity.internal.cache.verbose=true \
+          -Ddevelocity.internal.cache.defaultLogLevel=info \
+          debug \
+          clean \
           +headerCheckAll

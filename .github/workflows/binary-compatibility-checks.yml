@@ -13,11 +13,12 @@ jobs:
   check-binary-compatibility:
     name: Check / Binary Compatibility
     runs-on: ubuntu-20.04
-    if: github.repository == 'apache/pekko'
     strategy:
       fail-fast: false
     env:
       DEVELOCITY_ACCESS_KEY: ${{ secrets.GE_ACCESS_TOKEN }}
+      ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+      ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -38,15 +39,20 @@ jobs:
         run: cp .jvmopts-ci .jvmopts
 
       - name: Compile code
-        run: sbt +compile
+        run: sbt clean +compile
 
       - name: Check if the dependency task in the built correctly
-        run: sbt dependWalkerCheck
+        run: sbt clean dependWalkerCheck
 
       - name: Report MiMa Binary Issues
         run: |-
-          sbt +mimaReportBinaryIssues
+          sbt clean +mimaReportBinaryIssues
 
       - name: Check correct MiMa filter directories
         run: |
-          sbt checkMimaFilterDirectories
+          sbt \
+          -Ddevelocity.internal.cache.verbose=true \
+          -Ddevelocity.internal.cache.defaultLogLevel=info \
+          debug \
+          clean \
+          checkMimaFilterDirectories

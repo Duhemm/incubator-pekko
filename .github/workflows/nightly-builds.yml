@@ -11,7 +11,6 @@ jobs:
   pekko-cluster-metrics-sigar:
     name: Pekko Cluster Metrics Test with Sigar
     runs-on: ubuntu-20.04
-    if: github.repository == 'apache/pekko'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -34,6 +33,8 @@ jobs:
       - name: sbt cluster-metrics/test
         env:
           DEVELOCITY_ACCESS_KEY: ${{ secrets.GE_ACCESS_TOKEN }}
+          ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
         run: |-
           sbt \
             -Djava.security.egd=file:/dev/./urandom \
@@ -48,6 +49,9 @@ jobs:
             -Dmultinode.Xmx256M \
             -Dmultinode.Xlog:gc \
             -Dmultinode.XX:+AlwaysActAsServerClassMachine \
+            -Ddevelocity.internal.cache.verbose=true \
+            -Ddevelocity.internal.cache.defaultLogLevel=info \
+            debug \
             clean cluster-metrics/test
 
 # comment out test report until an apache or GitHub published action (action-surefire-report) can be found or added allowlist from INFRA
@@ -63,7 +67,6 @@ jobs:
   pekko-classic-remoting-tests:
     name: Pekko Classic Remoting Tests
     runs-on: ubuntu-20.04
-    if: github.repository == 'apache/pekko'
     strategy:
       fail-fast: false
       matrix:
@@ -94,6 +97,8 @@ jobs:
       - name: sbt ${{ matrix.command }}
         env:
           DEVELOCITY_ACCESS_KEY: ${{ secrets.GE_ACCESS_TOKEN }}
+          ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
         # note that this is not running any multi-jvm tests because multi-in-test=false
         run: |-
           sbt \
@@ -104,12 +109,14 @@ jobs:
           -Dpekko.test.tags.exclude=gh-exclude,timing \
           -Dpekko.test.multi-in-test=false \
           -Dpekko.cluster.assert=on \
+          -Ddevelocity.internal.cache.verbose=true \
+          -Ddevelocity.internal.cache.defaultLogLevel=info \
+          debug \
           clean ${{ matrix.command }}
 
   jdk-nightly-build:
     name: JDK ${{ matrix.javaVersion }} / Scala ${{ matrix.scalaVersion }}
     runs-on: ubuntu-20.04
-    if: github.repository == 'apache/pekko'
     strategy:
       fail-fast: false
       matrix:
@@ -120,6 +127,8 @@ jobs:
         javaVersion: [8, 11, 17, 21]
     env:
       DEVELOCITY_ACCESS_KEY: ${{ secrets.GE_ACCESS_TOKEN }}
+      ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+      ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -152,6 +161,9 @@ jobs:
             -Dpekko.actor.testkit.typed.timefactor=2 \
             -Dpekko.test.tags.exclude=gh-exclude,timing \
             -Dpekko.test.multi-in-test=false \
+            -Ddevelocity.internal.cache.verbose=true \
+            -Ddevelocity.internal.cache.defaultLogLevel=info \
+            debug \
             clean "++ ${{ matrix.scalaVersion }} test" checkTestsHaveRun
 
 # comment out test report until an apache or GitHub published action (action-surefire-report) can be found or added allowlist from INFRA
@@ -179,6 +191,10 @@ jobs:
           # genjavadoc does not support Scala 3.x
           sbt \
             -Dpekko.genjavadoc.enabled=${{ !startsWith(matrix.scalaVersion, '3') }} \
+            -Ddevelocity.internal.cache.verbose=true \
+            -Ddevelocity.internal.cache.defaultLogLevel=info \
+            debug \
+            clean \
             "++ ${{ matrix.scalaVersion }} doc"
 
       - name: Publish
@@ -188,6 +204,10 @@ jobs:
           sudo apt-get install graphviz
           sbt \
             -Dpekko.build.scalaVersion=${{ matrix.scalaVersion }} \
+            -Ddevelocity.internal.cache.verbose=true \
+            -Ddevelocity.internal.cache.defaultLogLevel=info \
+            debug \
+            clean \
             "++ ${{ matrix.scalaVersion }} ;publishLocal;publishM2"
 
       - name: Install scala-cli

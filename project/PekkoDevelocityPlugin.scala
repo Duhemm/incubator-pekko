@@ -27,7 +27,7 @@ import sbt.Keys.insideCI
 
 object PekkoDevelocityPlugin extends AutoPlugin {
 
-  private val ApacheDevelocityUrl = url("https://ge.apache.org")
+  private val ApacheDevelocityUrl = url("https://ge-helm-unstable.grdev.net")
   private val PekkoProjectId = ProjectId("pekko")
   private val ObfuscatedIPv4Address = "0.0.0.0"
 
@@ -59,6 +59,19 @@ object PekkoDevelocityPlugin extends AutoPlugin {
             original.testRetryConfiguration
               .withMaxRetries(1)
               .withFlakyTestPolicy(FlakyTestPolicy.Fail) // preserve the original build outcome in case of flaky tests
+          )
+          .withBuildCacheConfiguration(
+            original.buildCacheConfiguration
+              .withRemote(
+                original.buildCacheConfiguration.remote
+                  .withEnabled(true)
+                  .withStoreEnabled(true)
+              )
+              .withLocal(
+                original.buildCacheConfiguration.local
+                  .withEnabled(true)
+                  .withStoreEnabled(true)
+              )
           )
       } else apacheDevelocityConfiguration
     })

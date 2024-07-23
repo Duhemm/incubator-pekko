@@ -55,6 +55,8 @@ jobs:
       - name: Build Documentation
         env:
           DEVELOCITY_ACCESS_KEY: ${{ secrets.GE_ACCESS_TOKEN }}
+          ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
         run: |-
           sbt -Dpekko.genjavadoc.enabled=true -Dpekko.genlicensereport.enabled=true "set ThisBuild / version := \"1.1.0-M1\"; docs/paradox; unidoc"
 

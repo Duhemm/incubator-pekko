@@ -16,6 +16,8 @@ jobs:
     runs-on: ubuntu-22.04
     env:
       DEVELOCITY_ACCESS_KEY: ${{ secrets.GE_ACCESS_TOKEN }}
+      ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+      ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -39,12 +41,15 @@ jobs:
           sbt \
           -Dsbt.override.build.repos=false \
           -Dsbt.log.noformat=false \
+          clean \
           javafmtCheckAll
   pull-request-validation:
     name: Check / Tests
     runs-on: ubuntu-20.04
     env:
       DEVELOCITY_ACCESS_KEY: ${{ secrets.GE_ACCESS_TOKEN }}
+      ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+      ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -78,6 +83,10 @@ jobs:
           -Dpekko.test.multi-node=false \
           -Dsbt.log.noformat=false \
           -Dpekko.log.timestamps=true \
+          -Ddevelocity.internal.cache.verbose=true \
+          -Ddevelocity.internal.cache.defaultLogLevel=info \
+          debug \
+          clean \
           validateCompile
 
       - name: sbt validatePullRequest
@@ -93,4 +102,8 @@ jobs:
           -Dpekko.test.multi-node=false \
           -Dsbt.log.noformat=false \
           -Dpekko.log.timestamps=true \
+          -Ddevelocity.internal.cache.verbose=true \
+          -Ddevelocity.internal.cache.defaultLogLevel=info \
+          debug \
+          clean \
           validatePullRequest

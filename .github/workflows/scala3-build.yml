@@ -16,7 +16,6 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-20.04
-    if: github.repository == 'apache/pekko'
     strategy:
       matrix:
         command:
@@ -53,6 +52,8 @@ jobs:
 
       - name: Compile and run tests on Scala 3
         env:
+          ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
           DEVELOCITY_ACCESS_KEY: ${{ secrets.GE_ACCESS_TOKEN }}
         # note that this is not running any multi-jvm tests (yet) because multi-in-test=false
         run: |
@@ -66,6 +67,10 @@ jobs:
           -Dmultinode.Xms256M \
           -Dmultinode.Xmx256M \
           -Dmultinode.XX:+AlwaysActAsServerClassMachine \
+          -Ddevelocity.internal.cache.verbose=true \
+          -Ddevelocity.internal.cache.defaultLogLevel=info \
+          debug \
+          clean \
           "++ 3.x ${{ matrix.command }}"
 
       # comment out email actions until we have an email address to use (and we need to get INFRA to whitelist dawidd6/action-send-mail)

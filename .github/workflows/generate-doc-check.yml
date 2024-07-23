@@ -27,7 +27,6 @@ jobs:
   generate-doc-check:
     name: Generate doc check
     runs-on: ubuntu-20.04
-    if: github.repository == 'apache/pekko'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -51,4 +50,12 @@ jobs:
       - name: Compile testClass&docs for all Scala versions
         env:
           DEVELOCITY_ACCESS_KEY: ${{ secrets.GE_ACCESS_TOKEN }}
-        run: sbt ";+TestJdk9 / compile ; +compile:doc"
+          ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+        run: |
+          sbt \
+          -Ddevelocity.internal.cache.verbose=true \
+          -Ddevelocity.internal.cache.defaultLogLevel=info \
+          debug \
+          +TestJdk9 / compile \
+          +compile:doc"

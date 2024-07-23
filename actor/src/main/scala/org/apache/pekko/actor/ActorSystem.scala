@@ -55,6 +55,10 @@ object BootstrapSetup {
     new BootstrapSetup()
   }
 
+  def helloWorld(): Unit = {
+    println("Hello, world!")
+  }
+
   /**
    * Scala API: Create bootstrap settings needed for starting the actor system
    *

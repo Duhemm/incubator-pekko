@@ -67,6 +67,9 @@ jobs:
           -Dmultinode.Xms256M \
           -Dmultinode.Xmx256M \
           -Dmultinode.XX:+AlwaysActAsServerClassMachine \
+          -Ddevelocity.internal.cache.verbose=true \
+          -Ddevelocity.internal.cache.defaultLogLevel=info \
+          debug \
           clean \
           "++ 3.x ${{ matrix.command }}"
 

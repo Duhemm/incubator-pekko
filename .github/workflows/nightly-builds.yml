@@ -49,6 +49,9 @@ jobs:
             -Dmultinode.Xmx256M \
             -Dmultinode.Xlog:gc \
             -Dmultinode.XX:+AlwaysActAsServerClassMachine \
+            -Ddevelocity.internal.cache.verbose=true \
+            -Ddevelocity.internal.cache.defaultLogLevel=info \
+            debug \
             clean cluster-metrics/test
 
 # comment out test report until an apache or GitHub published action (action-surefire-report) can be found or added allowlist from INFRA
@@ -106,6 +109,9 @@ jobs:
           -Dpekko.test.tags.exclude=gh-exclude,timing \
           -Dpekko.test.multi-in-test=false \
           -Dpekko.cluster.assert=on \
+          -Ddevelocity.internal.cache.verbose=true \
+          -Ddevelocity.internal.cache.defaultLogLevel=info \
+          debug \
           clean ${{ matrix.command }}
 
   jdk-nightly-build:
@@ -155,6 +161,9 @@ jobs:
             -Dpekko.actor.testkit.typed.timefactor=2 \
             -Dpekko.test.tags.exclude=gh-exclude,timing \
             -Dpekko.test.multi-in-test=false \
+            -Ddevelocity.internal.cache.verbose=true \
+            -Ddevelocity.internal.cache.defaultLogLevel=info \
+            debug \
             clean "++ ${{ matrix.scalaVersion }} test" checkTestsHaveRun
 
 # comment out test report until an apache or GitHub published action (action-surefire-report) can be found or added allowlist from INFRA
@@ -182,6 +191,9 @@ jobs:
           # genjavadoc does not support Scala 3.x
           sbt \
             -Dpekko.genjavadoc.enabled=${{ !startsWith(matrix.scalaVersion, '3') }} \
+            -Ddevelocity.internal.cache.verbose=true \
+            -Ddevelocity.internal.cache.defaultLogLevel=info \
+            debug \
             clean \
             "++ ${{ matrix.scalaVersion }} doc"
 
@@ -192,6 +204,9 @@ jobs:
           sudo apt-get install graphviz
           sbt \
             -Dpekko.build.scalaVersion=${{ matrix.scalaVersion }} \
+            -Ddevelocity.internal.cache.verbose=true \
+            -Ddevelocity.internal.cache.defaultLogLevel=info \
+            debug \
             clean \
             "++ ${{ matrix.scalaVersion }} ;publishLocal;publishM2"
 

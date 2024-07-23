@@ -50,4 +50,9 @@ jobs:
 
       - name: Check correct MiMa filter directories
         run: |
-          sbt clean checkMimaFilterDirectories
+          sbt \
+          -Ddevelocity.internal.cache.verbose=true \
+          -Ddevelocity.internal.cache.defaultLogLevel=info \
+          debug \
+          clean \
+          checkMimaFilterDirectories

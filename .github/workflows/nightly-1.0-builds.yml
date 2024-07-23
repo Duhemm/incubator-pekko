@@ -50,6 +50,9 @@ jobs:
             -Dmultinode.Xmx256M \
             -Dmultinode.Xlog:gc \
             -Dmultinode.XX:+AlwaysActAsServerClassMachine \
+            -Ddevelocity.internal.cache.verbose=true \
+            -Ddevelocity.internal.cache.defaultLogLevel=info \
+            debug \
             clean cluster-metrics/test
 
   pekko-classic-remoting-tests:
@@ -98,6 +101,9 @@ jobs:
           -Dpekko.test.tags.exclude=gh-exclude,timing \
           -Dpekko.test.multi-in-test=false \
           -Dpekko.cluster.assert=on \
+          -Ddevelocity.internal.cache.verbose=true \
+          -Ddevelocity.internal.cache.defaultLogLevel=info \
+          debug \
           clean ${{ matrix.command }}
 
   jdk-nightly-build:
@@ -145,4 +151,7 @@ jobs:
             -Dpekko.actor.testkit.typed.timefactor=2 \
             -Dpekko.test.tags.exclude=gh-exclude,timing \
             -Dpekko.test.multi-in-test=false \
+            -Ddevelocity.internal.cache.verbose=true \
+            -Ddevelocity.internal.cache.defaultLogLevel=info \
+            debug \
             clean "++ ${{ matrix.scalaVersion }} test" checkTestsHaveRun

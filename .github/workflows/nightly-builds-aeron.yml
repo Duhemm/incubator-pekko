@@ -55,4 +55,7 @@ jobs:
           -Dpekko.cluster.assert=on \
           -Daeron.dir=/opt/volumes/media-driver \
           -Daeron.term.buffer.length=33554432 \
+          -Ddevelocity.internal.cache.verbose=true \
+          -Ddevelocity.internal.cache.defaultLogLevel=info \
+          debug \
           clean ${{ matrix.command }}
